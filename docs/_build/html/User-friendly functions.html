@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>User-friendly Functions &#8212; TRIAGE v2 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing TRIAGE" href="Testing%20TRIAGE.html" />
+    <link rel="prev" title="TRIAGEparser" href="TRIAGEparser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="user-friendly-functions">
+<h1>User-friendly Functions<a class="headerlink" href="#user-friendly-functions" title="Link to this heading">¶</a></h1>
+<p>The TRIAGE R package v2 includes several user-friendly functions designed to enhance data visualization and analysis. These functions provide intuitive graphical representations of complex data, making it easier for researchers to interpret their results. This document covers three key functions: <cite>plotJaccard</cite>, <cite>byPeak</cite>, and <cite>plotGO</cite>.</p>
+<section id="plotjaccard">
+<h2>plotJaccard<a class="headerlink" href="#plotjaccard" title="Link to this heading">¶</a></h2>
+<p>The <cite>plotJaccard</cite> function generates Jaccard similarity index heatmaps based on the output from the <cite>TRIAGEgene</cite> function, allowing for intuitive data comparisons.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>ds</cite>: The output matrix from the <cite>TRIAGEgene</cite> function.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>output_file</cite>: The desired file name for the output heatmap PDF.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>top_no</cite>: (Optional) The number of top TRIAGE ranked genes to consider for the Jaccard index calculation. Default is 100.</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">)</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Jaccard_heatmap.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bypeak">
+<h2>byPeak<a class="headerlink" href="#bypeak" title="Link to this heading">¶</a></h2>
+<p>The <cite>byPeak</cite> function calculates the average gene expression or average TRIAGE-weighted values for each gene grouped by ‘Peak’. It supports direct data frame input or reading from CSV/TXT files.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>expr</cite>: The gene expression data, either as a data frame or a path to a CSV/TXT file.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>peak</cite>: The metadata containing cell IDs and peak values, either as a data frame or a path to a CSV/TXT file.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>cell_column</cite>: (Optional) Name of the column in metadata representing cell IDs. Default is “Barcode”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>peak_column</cite>: (Optional) Name of the column in metadata representing peak values. Default is “Peak”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>prefix</cite>: (Optional) The prefix for the column names in the output file. Default is NULL.</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: using .csv files as the input files</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">byPeak</span><span class="p">(</span><span class="n">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/expression.csv&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="n">peak</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/metadata.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 2: using data frame (&#39;expr_df&#39; and &#39;metadata_df&#39;) as the input,</span>
+<span class="c1"># grouped by &#39;Clusters&#39;, and cell IDs are in the &quot;cell_name&quot; column</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">byPeak</span><span class="p">(</span><span class="n">expr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expr_df</span><span class="p">,</span>
+<span class="w">                </span><span class="n">peak</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">metadata_df</span><span class="p">,</span>
+<span class="w">                </span><span class="n">peak_column</span><span class="o">=</span><span class="s">&quot;Clusters&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="n">cell_column</span><span class="o">=</span><span class="s">&quot;cell_name&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="topgenes">
+<h2>topGenes<a class="headerlink" href="#topgenes" title="Link to this heading">¶</a></h2>
+<p>The <cite>topGenes</cite> function extracts the top <cite>n</cite> genes with the highest values from each column of a given data frame or matrix. This function is useful for identifying the top genes based on DS values or gene expression values for each TRIAGE peak, cluster, or group.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>ds</cite>: A data frame or matrix where rows represent genes and columns represent TRIAGE peaks, cell clusters, or groups. The values should be DS values or gene expression values.</p></li>
+<li><p><cite>top_no</cite> (optional): The number of top genes to extract for each column. The default value is 10.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A matrix where each element contains the top <cite>n</cite> genes in the format “GeneSymbol (DS value)” for each column of the input data.</p></li>
+</ul>
+<p><strong>Version Added:</strong></p>
+<ul class="simple">
+<li><p>from TRIAGE R package v1.1.4</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Extract the top 5 genes for each TRIAGE peak</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">)</span>
+<span class="n">top_genes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">topGenes</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">top_no</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="getclustergenes">
+<h2>getClusterGenes<a class="headerlink" href="#getclustergenes" title="Link to this heading">¶</a></h2>
+<p>The <cite>getClusterGenes</cite> function extracts genes assigned to a specific cluster based on the highest probability from the output of the <cite>TRIAGEparser</cite>. This is particularly useful for users conducting downstream analyses for individual gene clusters.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>input_file</cite>: The path to the CSV file containing genes and their cluster probabilities.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>cluster_name</cite>: The name of the cluster to extract genes from.</p></li>
+</ul>
+<p><strong>Version Added:</strong></p>
+<ul class="simple">
+<li><p>from TRIAGE R package v1.1.3</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Extract genes assigned to cluster1 from the TRIAGEparser output</span>
+<span class="n">cluster1_genes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">getClusterGenes</span><span class="p">(</span><span class="s">&quot;TRIAGEparser_output/gene_clusters/output_gene_clusters.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cluster1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plotgo">
+<h2>plotGO<a class="headerlink" href="#plotgo" title="Link to this heading">¶</a></h2>
+<p>The <cite>plotGO</cite> function creates GO enrichment heatmaps from the output of the <cite>TRIAGEparser</cite>. It visualizes the GO enrichment analysis results for specific groups or IDs.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>indir</cite>: The path to the output directory from <cite>TRIAGEparser</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>outdir</cite>: The directory where the generated heatmap PDF files will be saved.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>id</cite>: (Optional) Parameter to specify a particular group or ID for heatmap generation. Default is NULL (generates heatmaps for all groups/IDs).</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>color_palette</cite>: (Optional) Parameter for custom heatmap color palette. Default is a gradient from light grey to red.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>top_terms</cite>: (Optional) The number of top GO terms for each gene cluster to include in the heatmap. Default is 10.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>fdr</cite>: (Optional) The FDR threshold for the heatmap visulization of TRIAGEparser results. Default is 0.01.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>width</cite>: (Optional) The width of the output PDF heatmap. Default is NULL, which uses default behavior of pdf().</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>height</cite>: (Optional) The height of the output PDF heatmap. Default is NULL, which uses default behavior of pdf().</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Generate heatmaps for all groups/IDs</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 2: Generate heatmap for a specific group “Peak1”,</span>
+<span class="c1"># with the PDF size 6X7</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Peak1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
+
+<span class="c1"># Example 3: Generate heatmap for two groups: “Peak0” and &quot;Peak1&quot;,</span>
+<span class="c1"># with the PDF size 6X7</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Peak0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Peak1&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="comparego">
+<h2>compareGO<a class="headerlink" href="#comparego" title="Link to this heading">¶</a></h2>
+<p>The <cite>compareGO</cite> function performs GO enrichment analysis and generates a dot plot to compare selected GO terms across gene sets. It is designed to identify significant GO terms in the provided gene lists based on TRIAGE-weighted values (i.e., DS values). The function can also be used with other ranking methods, such as sorting genes by expression values in descending order, making it adaptable to different analytical approaches.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>ds</cite>: A data frame containing discordance scores (DS) with gene symbols as row names.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>ds_column</cite>: Character string specifying the name of the column in <cite>ds</cite> containing DS values for sorting. Default is <cite>“DS_value”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>top_genes</cite>: Numeric vector specifying the number of top DS genes to use in the GO analysis. Default is <cite>c(20, 50, 100)</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>organism</cite>: The <cite>OrgDb</cite> object for the organism’s annotation database. Common options include <cite>org.Hs.eg.db</cite> (human), <cite>org.Mm.eg.db</cite> (mouse), and <cite>org.Rn.eg.db</cite> (rat). Default is <cite>org.Hs.eg.db</cite>. See [Bioconductor Annotation Packages](<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">https://bioconductor.org/packages/release/BiocViews.html#___OrgDb</a>) for additional species.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>keywords</cite>: Character vector of keywords to filter GO terms, returning only those containing any of the keywords. Default is <cite>c(“Wnt”, “cardiac cell”, “cardiac pacemaker cell”, “cardiac muscle cell”, “endothelial cell”, “cardiomyocytes”, “fibroblast”, “myofibroblasts”, “smooth muscle cell”)</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>outdir</cite>: Directory to save output files, such as GO enrichment results and the dot plot PDF. Default is the current working directory.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>output_file</cite>: Name of the output PDF file for the dot plot. Default is <cite>“compareGO.pdf”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>color_low</cite>: Color for low enrichment values in the plot. Default is <cite>“lightgrey”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>color_high</cite>: Color for high enrichment values in the plot. Default is <cite>“red”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>width</cite>: Width of the output plot in inches for the PDF file. Default is <cite>8</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>height</cite>: Height of the output plot in inches for the PDF file. Default is <cite>6</cite>.</p></li>
+</ul>
+<p><strong>Returns:</strong>
+A data frame containing the GO enrichment comparison results for the specified gene sets. Additionally, a dot plot visualizing the enrichment comparison is generated and saved as a PDF file.</p>
+<p><strong>Version Added:</strong></p>
+<ul class="simple">
+<li><p>from TRIAGE R package v1.1.5</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Compare GO enrichment for the top 20, 50, 100, and 150 DS genes with a focus on &quot;Wnt&quot;</span>
+<span class="nf">compareGO</span><span class="p">(</span><span class="n">ds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ds_data</span><span class="p">,</span><span class="w"> </span><span class="n">ds_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;DS_value&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="n">top_genes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">150</span><span class="p">),</span>
+<span class="w">          </span><span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Wnt&quot;</span><span class="p">),</span>
+<span class="w">          </span><span class="n">output_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;compareGO.pdf&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE v2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User-friendly Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#plotjaccard">plotJaccard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bypeak">byPeak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#topgenes">topGenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getclustergenes">getClusterGenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotgo">plotGO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparego">compareGO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Case%20Study.html">Case Study</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="TRIAGEparser.html" title="previous chapter">TRIAGEparser</a></li>
+      <li>Next: <a href="Testing%20TRIAGE.html" title="next chapter">Testing TRIAGE</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/User-friendly functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

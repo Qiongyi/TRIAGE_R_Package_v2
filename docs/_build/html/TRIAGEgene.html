@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TRIAGEgene &#8212; TRIAGE v2 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TRIAGEcluster" href="TRIAGEcluster.html" />
+    <link rel="prev" title="Installation" href="Installation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="triagegene">
+<h1>TRIAGEgene<a class="headerlink" href="#triagegene" title="Link to this heading">¶</a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
+<p>TRIAGEgene is one of core functions of the TRIAGE R package v2, aiming to predict the regulatory potential of genes and further identify genetic drivers of cell identity. This approach calculates repressive tendency scores (RTS) for each gene by analyzing broad H3K27me3 domains near the gene (2.5kb upstream plus the gene body), and then integrates the RTS metric with gene expression data to calculate a TRIAGE-weighted value for each gene. This value, also referred to as Discordance Score (DS) in previous literature, indicates genes’ regulatory potential. After this TRIAGEgene transformation, it becomes instrumental in identifying potential regulatory and cell identity genes by ranking them in descending order based on the TRIAGE-weighted values within each group, which can vary from specific conditions to individual samples, distinct cell types, clusters, or even single cells.
+For more details, see: <a class="reference external" href="https://doi.org/10.1093/bib/bbaf004">Zhao et al., Briefings in Bioinformatics 2025, TRIAGE: an R package for regulatory gene analysis</a> and <a class="reference external" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7781436/">Shim et al., Cell Systems 2020, Conserved Epigenetic Regulatory Logic Infers Genes Governing Cell Identity</a>.</p>
+<p>The conservation of H3K27me3 patterns across eukaryotes (<a class="reference external" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4079967/">Arthur et al., Genome Research, 2014</a>) allows for the application of RTS calculation for a gene across species by identifying orthologous genes, even though the RTS values were originally generated using human H3K27me3 data. Our original publication validated this approach (<a class="reference external" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7781436/">Shim et al., Cell Systems, 2020</a>). In this R package, we utilize Ensembl BioMart to retrieve orthologous genes between humans and other species, enabling the application of RTS values from human genes to corresponding orthologs in non-human datasets. Detailed online instructions for retrieving orthologous genes can also be found here: <a class="reference external" href="https://www.ensembl.info/2009/01/21/how-to-get-all-the-orthologous-genes-between-two-species/">https://www.ensembl.info/2009/01/21/how-to-get-all-the-orthologous-genes-between-two-species/</a>.</p>
+<p><strong>Note:</strong> TRIAGEgene is adaptable to any type of data mapped to protein-coding and non-coding genes, including RNAseq, proteomics, ChIP-seq, and more.</p>
+</section>
+<section id="input-and-output">
+<h2>Input and Output<a class="headerlink" href="#input-and-output" title="Link to this heading">¶</a></h2>
+<p>Input: The function requires a matrix or data frame of normalized gene expression data. This data can be in formats like Counts Per Million (CPM), Fragments Per Kilobase of transcript per Million mapped reads (FPKM), or Transcripts Per Million (TPM).</p>
+<p>Output: The output is a matrix or data frame of TRIAGE-weighted gene expression data. This TRIAGE transformation can help to identify regulatory genes and genes crucial for cell identity.</p>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><cite>m</cite>: Input matrix or data frame of normalized gene expression data. Acceptable types include CPM, FPKM, TPM, among others.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>species</cite>: (Optional) Specifies the species. Default is “Human”. Other options include “C.intestinalis”, “Chicken”, “Guinea Pig”, “Mouse”, “Pig”, “Zebrafish”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>log</cite>: (Optional) Determines whether to apply a log transformation to the input data. The default value is NULL, allowing the function to make a decision based on data characteristics. Generally, it is recommended to use natural log-transformed normalized gene expression data as the input for TRIAGEgene. This transformation often enhances the analysis accuracy and is preferable for most datasets.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>data_source</cite>: (Optional) Data source selection, either “epimap” (default) or “roadmap”. Originally utilizing H3K27me3 data from 111 cell types in the NIH Epigenome Roadmap dataset (Roadmap Epigenomics, et al., 2015), the current release of TRIAGEgene has expanded its scope to include the EpiMap dataset, which offers a more comprehensive H3K27me3 signatures across 833 cell and tissue types (<a class="reference external" href="https://www.nature.com/articles/s41586-020-03145-z">Boix, et al., 2021</a>). Users can choose either the default EpiMap dataset or the original Roadmap dataset for RTS calculations, ensuring backward compatibility and data reproducibility.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>pvalue</cite>: (Optional) Logical value indicating whether to calculate p-values using a rank-based Z-Score method. Default is False. If set to TRUE, the function will calculate p-values based on the rank of each gene’s DS value compared to comparable genes with similar expression values.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>min_comparable_genes</cite>: (Optional) Integer specifying the minimum number of comparable genes to use for calculating p-values when <cite>pvalue = TRUE</cite>. This parameter ensures that at least this number of genes is used in the rank-based Z-Score calculation. Default is 100. Only applicable when <cite>pvalue</cite> is set to TRUE.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>percentile</cite>: (Optional) Numeric value representing the proportion of input genes to be used as comparable genes with similar gene expression values for p-value calculation when <cite>pvalue = TRUE</cite>. Default is 0.1 (10% of the input genes). If the calculated proportion results in fewer genes than <cite>min_comparable_genes</cite>, the <cite>min_comparable_genes</cite> value will be applied. Only applicable when <cite>pvalue</cite> is set to TRUE.</p></li>
+</ul>
+</section>
+<section id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Link to this heading">¶</a></h2>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Human data, with auto log transformation decision</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+
+<span class="c1"># Example 2: Human data, &#39;roadmap&#39; data source, auto log transformation</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;roadmap&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 3: Human data, forced log transformation</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="c1"># Example 4: Mouse data, without log transformation</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="c1"># Example 5: Mouse data, calculate p-values using a rank-based Z-Score method</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pvalue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE v2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TRIAGEgene</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-and-output">Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly%20functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Case%20Study.html">Case Study</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="TRIAGEcluster.html" title="next chapter">TRIAGEcluster</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/TRIAGEgene.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

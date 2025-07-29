@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Welcome to TRIAGE R Package (v2) Documentation! &#8212; TRIAGE v2 2.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="Installation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="welcome-to-triage-r-package-v2-documentation">
+<h1>Welcome to TRIAGE R Package (v2) Documentation!<a class="headerlink" href="#welcome-to-triage-r-package-v2-documentation" title="Link to this heading">¶</a></h1>
+<p>The TRIAGE R package (v2) provides a flexible, modular toolkit for identifying and prioritizing regulatory genes and genomic elements across diverse biological datasets.</p>
+<p>This version supports:</p>
+<ul class="simple">
+<li><p>Regulatory analysis of both <strong>bulk and single-cell RNA-seq</strong> datasets</p></li>
+<li><p><strong>Genome-wide interrogation</strong> of putative regulatory elements at <strong>single-base resolution</strong></p></li>
+<li><p>Multiple input types including <strong>gene expression matrices</strong>, <strong>gene lists</strong>, and <strong>genomic loci</strong></p></li>
+</ul>
+<p>TRIAGE enables the discovery of regulatory drivers of cell identity, differentiation, and disease. Its efficient implementation allows most analyses to complete in under <strong>30 minutes</strong>, depending on dataset size and computing resources.</p>
+<p>This documentation provides step-by-step instructions for both <strong>academic research and teaching</strong> and <strong>general</strong> users to install and use the TRIAGE R package v2. If you have obtained <cite>TRIAGE.Research_2.0.0.tar.gz</cite> or <cite>TRIAGE.General_2.0.0.tar.gz</cite> via the UQ e-shop, you’re in the right place.</p>
+<section id="contents">
+<h2>Contents:<a class="headerlink" href="#contents" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#r-dependencies">R Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#python-environment-setup">Python Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation.html#installing-triage-r-package">Installing TRIAGE R Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEgene.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEgene.html#input-and-output">Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEgene.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEgene.html#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEcluster.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEcluster.html#input-and-output">Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEcluster.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEcluster.html#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEparser.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEparser.html#input-and-output">Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEparser.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TRIAGEparser.html#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly%20functions.html">User-friendly Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="User-friendly%20functions.html#plotjaccard">plotJaccard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User-friendly%20functions.html#bypeak">byPeak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User-friendly%20functions.html#topgenes">topGenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User-friendly%20functions.html#getclustergenes">getClusterGenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User-friendly%20functions.html#plotgo">plotGO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User-friendly%20functions.html#comparego">compareGO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Testing%20TRIAGE.html#test-triagegene-plotjaccard-comparego">Test TRIAGEgene + plotJaccard() + compareGO()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testing%20TRIAGE.html#test-triagecluster-bypeak-topgenes">Test TRIAGEcluster + byPeak() + topGenes()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Testing%20TRIAGE.html#test-triageparser-plotgo-getclustergenes">Test TRIAGEparser + plotGO() + getClusterGenes()</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Case%20Study.html">Case Study</a></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">TRIAGE v2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly%20functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Case%20Study.html">Case Study</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="Installation.html" title="next chapter">Installation</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

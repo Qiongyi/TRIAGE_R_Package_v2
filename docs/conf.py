@@ -6,10 +6,14 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'TRIAGE_R_Package_v2'
+project = 'TRIAGE v2'
 copyright = '2025, Qiongyi Zhao'
 author = 'Qiongyi Zhao'
 release = '2.0.0'
+
+#html_theme = 'sphinx_rtd_theme'
+#html_title = "TRIAGE v2"
+#html_short_title = "TRIAGE"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
