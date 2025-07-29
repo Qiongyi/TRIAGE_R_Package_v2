@@ -1,0 +1,38 @@
+.. TRIAGE R Package documentation master file
+
+Welcome to TRIAGE R Package (v2) Documentation!
+===============================================
+
+The TRIAGE R package (v2) provides a flexible, modular toolkit for identifying and prioritizing regulatory genes and genomic elements across diverse biological datasets.
+
+This version supports:
+
+- Regulatory analysis of both **bulk and single-cell RNA-seq** datasets
+- **Genome-wide interrogation** of putative regulatory elements at **single-base resolution**
+- Multiple input types including **gene expression matrices**, **gene lists**, and **genomic loci**
+
+TRIAGE enables the discovery of regulatory drivers of cell identity, differentiation, and disease. Its efficient implementation allows most analyses to complete in under **30 minutes**, depending on dataset size and computing resources.
+
+This documentation provides step-by-step instructions for both **academic (Research)** and **institutional (General)** users to install and use the TRIAGE R package v2. If you have obtained `TRIAGE.Research_2.0.0.tar.gz` or `TRIAGE.General_2.0.0.tar.gz` via the UQ e-shop, you’re in the right place.
+
+
+Contents:
+---------
+
+.. toctree::
+   :maxdepth: 2
+
+   Installation
+   TRIAGEgene
+   TRIAGEcluster
+   TRIAGEparser
+   User-friendly functions 
+   Testing TRIAGE
+   Case Study
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`
