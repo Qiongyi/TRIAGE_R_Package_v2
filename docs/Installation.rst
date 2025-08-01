@@ -1,7 +1,7 @@
 Installation
 ============
 
-This section covers the installation and setup of the TRIAGE R package (v2). The TRIAGE R package v2 requires both R and Python dependencies. Follow these steps to set up the environment and install the package.
+This section covers the installation and setup of the TRIAGE R package v2. The TRIAGE R package v2 requires both R and Python dependencies. Follow these steps to set up the environment and install the package.
 
 .. _installation:
 
@@ -42,7 +42,7 @@ Common options include `org.Hs.eg.db` for humans, `org.Mm.eg.db` for mice, and `
 Python Environment Setup
 ------------------------
 
-To install the TRIAGE R package, you'll first need to set up the required Python modules within R using the reticulate package. There are two main options for this setup: using a Conda environment or a Python virtual environment. Details for each option are provided below.
+To install the TRIAGE R package v2, you'll first need to set up the required Python modules within R using the reticulate package. There are two main options for this setup: using a Conda environment or a Python virtual environment. Details for each option are provided below.
 
 **Option 1: Using a Conda environment**
 
@@ -123,20 +123,24 @@ In future R sessions, you can activate the “r-reticulate” environment to loa
     use_virtualenv("r-reticulate", required = TRUE)
 
 
-Installing TRIAGE R Package
----------------------------
+Installing TRIAGE R Package v2
+------------------------------
 
-1. Download the TRIAGE R package v2 (e.g., "TRIAGE.Research_2.0.0.tar.gz") from the UQ e-shop.
+1. Download TRIAGE R package v2. Visit the UQ e-shop to download the correct package based on your license:
+
+- For academic research and teaching use: download "TRIAGE.Academic_2.0.0.tar.gz"
+
+- For general use: download "TRIAGE.General_2.0.0.tar.gz"
 
 2. Install the TRIAGE R package v2 from the appropriate source file, depending on your license type:
 
-- For academic research and teaching use, download the "TRIAGE.Research_2.0.0.tar.gz" package and install the following:
+- For academic research and teaching use, run:
   
 .. code-block:: R
 
-    install.packages("path/to/TRIAGE.Research_2.0.0.tar.gz", repos = NULL, type = "source")
+    install.packages("path/to/TRIAGE.Academic_2.0.0.tar.gz", repos = NULL, type = "source")
 
-- For general use, please download the "TRIAGE.General_2.0.0.tar.gz" package and install the following:
+- For general use, run:
 
 .. code-block:: R
 

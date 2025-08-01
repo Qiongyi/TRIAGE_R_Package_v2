@@ -26,6 +26,7 @@ Contents:
    TRIAGEgene
    TRIAGEcluster
    TRIAGEparser
+   TRIAGEccs
    User-friendly functions 
    Testing TRIAGE
    Case Study

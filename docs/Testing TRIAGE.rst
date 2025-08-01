@@ -1,7 +1,7 @@
 Testing TRIAGE
 ==============
 
-The TRIAGE R package (v2) offers a comprehensive suite of tools for analyzing transcriptomic data. This document provides a guide to testing the key functionalities of TRIAGE, including `TRIAGEgene`, `TRIAGEcluster`, and `TRIAGEparser`, along with their associated visualization and analysis functions. These tests are designed to demonstrate the capabilities of each function and ensure their correct operation.
+The TRIAGE R package (v2) offers a comprehensive suite of tools for analyzing transcriptomic data. This document provides a guide to testing the key functionalities of TRIAGE, including `TRIAGEgene`, `TRIAGEcluster`, `TRIAGEparser`, and `TRIAGEccs`, along with their associated visualization and analysis functions. These tests are designed to demonstrate the capabilities of each function and ensure their correct operation.
 
 Test TRIAGEgene + plotJaccard() + compareGO()
 ----------------------------------------------
@@ -206,3 +206,77 @@ Objective: To test `TRIAGEparser` using a gene list and visualize gene ontology 
 
 
 These tests serve as a practical demonstration of how to apply the TRIAGE R package for analyzing and visualizing complex transcriptomic data. Researchers can adapt these procedures to their specific datasets, ensuring the effective use of TRIAGE in research projects.
+
+
+Test TRIAGEccs
+--------------
+
+`TRIAGEccs` is used for the genome-wide scoring and prioritization of regulatory elements for generating CCS-based outputs to support downstream ranking and interpretation.
+
+**# Test 1: Run TRIAGEccs on lncRNAs** 
+
+*Input file:* `lncipedia_5_2_hc_hg38.chr12.bed`
+
+Objective: To test `TRIAGEccs` using human lncRNA data and generate a ranked list of lncRNAs based on their Cellular Constraint Scores (CCS), enabling identification of candidates with high regulatory potential.
+
+**Steps:**
+
+1. Run TRIAGEccs to calculate CCS values for all lncRNAs on chromosome 12:
+
+.. code-block:: R
+
+    library(TRIAGE)
+
+    # Specify the input file bundled with the TRIAGE R package v2
+    input_file <- system.file("extdata", "lncipedia_5_2_hc_hg38.chr12.bed", package = "TRIAGE")
+
+    # Run TRIAGEccs
+    ccs_whole <- TRIAGEccs(input_file, 
+                           rts_genome = "TRIAGE_hg38.bedgraph", 
+                           output = "chr12_CCS_whole.bed")
+
+
+2. Rank lncRNAs by their CCS values:
+
+.. code-block:: R
+
+    # Sort lncRNAs in descending order of CCS
+    ccs_whole_sorted <- ccs_whole[order(ccs_whole$CCS, decreasing = TRUE), ]
+
+    # Save the ranked lncRNAs
+    write.table(ccs_whole_sorted, file = "LNCipedia_chr12_CCS.txt", 
+                row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+
+    # View top 20 lncRNAs
+    head(ccs_whole_sorted, 20)[, c(1:4, 13)]
+
+
+**# Test 2: Run TRIAGEccs on Demo SNP Data**
+
+*Input file:* `Heart_Left_Ventricle_variants_v8_demo.bed`
+
+Objective: To test `TRIAGEccs` using human SNP data and generate a ranked list of SNPs based on their CCS.
+
+**Steps:**
+
+1. Run TRIAGEccs to compute CCS values for each variant:
+
+.. code-block:: R
+
+    library(TRIAGE)
+
+    # Specify the input file bundled with the TRIAGE R package v2
+    input_file <- system.file("extdata", "Heart_Left_Ventricle_variants_v8_demo.bed", package = "TRIAGE")
+
+    # Run TRIAGEccs
+    variants_ccs <- TRIAGEccs(input_file, 
+                              rts_genome = "TRIAGE_hg38.bedgraph", 
+                              output = "Heart_Left_Ventricle_variants_v8_demo_CCS.bed")
+
+
+2. Filter and rank variants:
+
+.. code-block:: R
+
+    variants_ccs <- variants_ccs[CCS > 0]
+    ccs_sorted <- variants_ccs[order(-CCS)]
